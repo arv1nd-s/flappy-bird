@@ -18,6 +18,16 @@ let bird = {                 // bird object
     height: birdHeight
 }
 
+// pipes
+let pipeArray = [];
+let pipeWidth = 64;          // pipe image ratio -> 384/3072 = 1/8
+let pipeHeight = 512;
+let pipeX = canvasWidth;
+let pipeY = 0;
+
+let topPipeImg;
+let bottomPipeImg;
+
 window.onload = function() {
     canvas = document.getElementById('canvas');
     canvas.width = canvasWidth;
@@ -30,4 +40,33 @@ window.onload = function() {
     birdImg.onload = function(){
         context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     }
+
+    topPipeImg = new Image();
+    topPipeImg.src = "./images/toppipe.png";
+    
+    bottomPipeImg = new Image();
+    bottomPipeImg.src = "./images/bottompipe.png";
+
+    requestAnimationFrame(update);
+    setInterval(placePipes, 1500);            // every 1.5 seconds
+}
+
+function update(){
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // bird
+    context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+}
+
+function placePipes(){
+    let topPipe = {
+        img: topPipeImg,
+        x: pipeX,
+        y: pipeY,
+        width: pipeWidth,
+        height: pipeHeight,
+        passed: false
+    }
+
+    pipeArray.push(topPipe);
 }
